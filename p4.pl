@@ -1,2 +1,2 @@
 numofelement(0,[]).
-numofelement(X,[H|T]) :- numofelement(Y,T),X is Y+1.
+numofelement(X,[_|T]) :- numofelement(Y,T),X is Y+1.

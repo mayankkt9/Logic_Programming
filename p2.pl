@@ -1,2 +1,2 @@
 secondlast(X,[X|[_]]).
-secondlast(X,[H|T]) :- secondlast(X,T).
+secondlast(X,[_|T]) :- secondlast(X,T).
