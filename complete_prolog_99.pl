@@ -108,6 +108,29 @@ compressL([[H|Tsublist]|TList],[[Num|H]|Tail]) :-
 	compressL(TList,Tail).
 %% -------------------------------------------------------------------------------------------------------------------------------------------
 
+dropAllNth(List,N,X) :-
+	N>0,
+	dropAllNth(List,N,1,X).
+
+dropAllNth( []     , _ , _ , [] ) .
+dropAllNth([H|T],N,Counter,Result) :-
+	(Counter mod N =:= 0 -> Result=Tail ; Result=[H|Tail]) ,
+	Counter1 is Counter + 1,
+	dropAllNth(T,N,Counter1,Tail).
+
+drop(Xs,N,Rs) :-
+  integer(N) ,
+  N > 0 ,
+  drop(Xs,1,N,Rs)
+  .
+drop( []     , _ , _ , [] ) .
+drop( [X|Xs] , P , N , Rs ) :-
+  ( 0 =:= P mod N -> R1 = Rs ; [X|R1] = Rs ) ,
+  P1 is P+1 ,
+  drop(Xs,P1,N,R1)
+  .
+
+
 
 
 
