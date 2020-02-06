@@ -108,6 +108,7 @@ compressL([[H|Tsublist]|TList],[[Num|H]|Tail]) :-
 	compressL(TList,Tail).
 %% -------------------------------------------------------------------------------------------------------------------------------------------
 
+%% Program 16
 dropAllNth(List,N,X) :-
 	N>0,
 	dropAllNth(List,N,1,X).
@@ -117,22 +118,74 @@ dropAllNth([H|T],N,Counter,Result) :-
 	(Counter mod N =:= 0 -> Result=Tail ; Result=[H|Tail]) ,
 	Counter1 is Counter + 1,
 	dropAllNth(T,N,Counter1,Tail).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
 
-drop(Xs,N,Rs) :-
-  integer(N) ,
-  N > 0 ,
-  drop(Xs,1,N,Rs)
-  .
-drop( []     , _ , _ , [] ) .
-drop( [X|Xs] , P , N , Rs ) :-
-  ( 0 =:= P mod N -> R1 = Rs ; [X|R1] = Rs ) ,
-  P1 is P+1 ,
-  drop(Xs,P1,N,R1)
-  .
+%% Program 17
+splitList(L,0,[],L).
+splitList([H|T],N,[H|Tail],L2) :-
+	N>0,
+	N1 is N-1,
+	splitList(T,N1,Tail,L2).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
 
+%% Program 19
+rotate(List,N,Result) :-
+   length(List,ListLen), 
+   N1 is N mod ListLen, 
+   rotate_left(List,N1,Result).
 
+rotate_left(L,0,L).
+rotate_left(List,N,Result) :- 
+	N > 0, 
+	splitList(List,N,L1,L2), 
+	append(L2,L1,Result).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
 
+%% Program 20
+%% ?- remove_at(X,[a,b,c,d],2,R).
+remove_at(X,List,N,Result) :-
+	N1 is N-1,
+	splitList(List,N1,L1,L2),
+	[X|R] = L2,
+	append(L1,R,Result).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
 
+%% Program 21
+insertAtList(Element,List,Index,Result) :-
+	I is Index-1,
+	splitList(List,I,L1,L2),
+	append(L1,[Element],L3),
+	append(L3,L2,Result).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
 
+%% Program 22
+%% ?- range(4,9,L).
+range(End,End,[End]).
+range(Start,End,L) :-
+	Start<End,
+	L=[Start|Tail],
+	S1 is Start+1,
+	range(S1,End,Tail).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
 
+%% Program 31
+%% ?- is_prime(7).
+is_prime(2).
+is_prime(3).
+is_prime(N) :-
+	integer(N),
+	N>3,
+	N mod 2 =\= 0,
+	not(factor(N,3)).
+factor(N,Counter) :- 
+	N mod Counter =:= 0.
+factor(N,Counter) :- 
+	Counter*Counter<N,
+	C1 is Counter+2,
+	factor(N,C1).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
 
+gcd(0,B,B).
+gcd(A,B,Result) :-
+	T is B mod A,
+	gcd(T,A,Result).
