@@ -113,7 +113,7 @@ dropAllNth(List,N,X) :-
 	N>0,
 	dropAllNth(List,N,1,X).
 
-dropAllNth( []     , _ , _ , [] ) .
+dropAllNth([],_,_,[]) .
 dropAllNth([H|T],N,Counter,Result) :-
 	(Counter mod N =:= 0 -> Result=Tail ; Result=[H|Tail]) ,
 	Counter1 is Counter + 1,
@@ -168,6 +168,48 @@ range(Start,End,L) :-
 	range(S1,End,Tail).
 %% -------------------------------------------------------------------------------------------------------------------------------------------
 
+%% Program 23
+%% ?- rnd_select([a,b,c,d,e,f,g,h],3,L).
+
+rnd_select(_,0,[]).
+rnd_select(List,N,Result) :-
+	length(List,Len),
+	N=<Len,
+	R1 is random(Len)+1,
+	remove_at(Num,List,R1,Tail),
+	Result = [Num|RS1],
+	N1 is N-1,
+	rnd_select(Tail,N1,RS1).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
+
+%% Program 24
+%% ?- rangerandom(6,49,L).
+rangerandom(N,M,Result) :-
+	range(1,M,List),
+	rnd_select(List,N,Result).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
+
+%% Program 25
+%% ?- rnd_permu([a,b,c,d,e,f],L).
+rnd_permu(List,Result) :-
+	length(List,Len),
+	rnd_select(List,Len,Result).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
+
+%% Program 26
+%% ?- combination(3,[a,b,c,d,e,f],L).
+combination(0,_,[]).
+combination(K,List,[H|Tail]) :-
+	K > 0,
+	helpercomb(H,List,R), 
+	K1 is K-1, 
+	combination(K1,R,Tail).
+
+helpercomb(H,[H|Tail],Tail).
+helpercomb(H,[_|Tail],Result) :- 
+	helpercomb(H,Tail,Result).
+%% -------------------------------------------------------------------------------------------------------------------------------------------
+
 %% Program 31
 %% ?- is_prime(7).
 is_prime(2).
@@ -185,6 +227,7 @@ factor(N,Counter) :-
 	factor(N,C1).
 %% -------------------------------------------------------------------------------------------------------------------------------------------
 
+%% Program 32
 gcd(0,B,B).
 gcd(A,B,Result) :-
 	T is B mod A,
