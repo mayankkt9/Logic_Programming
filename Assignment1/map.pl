@@ -27,16 +27,17 @@ color(green).
 color(yellow).
 
 color_map(L) :-
-	color_map(L,[]).
+	generate_vertex_list(VertexList),
+	color_map(L,[],VertexList).
 
-color_map(Result,ResultSoFar) :-
-	vertex(V),
+color_map(Result,ResultSoFar,VertexList) :-
+	select_after(V,VertexList,RemainList),
 	not(member_list(V,ResultSoFar)),
 	color(C),
 	is_safe(V,C,ResultSoFar),
 	append(ResultSoFar,[[V,C]],ResultTemp),
-	color_map(Result,ResultTemp).
-color_map(Result,ResultSoFar) :-
+	color_map(Result,ResultTemp,RemainList).
+color_map(Result,ResultSoFar,_) :-
 	aggregate_all(count, vertex(X), Count),
 	length(ResultSoFar,CurrentCount),
 	Count == CurrentCount,
@@ -57,9 +58,16 @@ is_safe(Vertex,Color,[[V,_]|Tail]) :-
 	not(connection(Vertex,V)),
 	is_safe(Vertex,Color,Tail).
 
+%% https://stackoverflow.com/questions/13431407/how-to-get-a-list-of-possible-predicate-values
+generate_vertex_list(L) :-
+	findall(X, vertex(X), L), 
+	maplist(vertex, L).
 	
 
-
+select_after(H,[H|T],T).
+%% Dont append number previous to X
+select_after(X,[_|T],Result) :-
+	select_after(X,T,Result).
 
 
 
