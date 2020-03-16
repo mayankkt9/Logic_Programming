@@ -30,7 +30,7 @@ p(t(1,X,1)) --> [1],p(X),[1].
 
 sentence(sentence(X,Y)) --> noun-phrase(X),verb-phrase(Y).
 noun-phrase(noun-phrase(X,Y)) --> article(X),noun(Y).
-verb-phrase(t(X,Y)) --> verb(X),noun-phrase(Y).
+verb-phrase(verb-phrase(X,Y)) --> verb(X),noun-phrase(Y).
 article(article(a)) --> [a].
 article(article(the)) --> [the].
 noun(noun(girl)) --> [girl].
