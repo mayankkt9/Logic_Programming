@@ -39,8 +39,9 @@ verb(verb(sees)) --> [sees].
 verb(verb(pets)) --> [pets].
 
 
-expr --> ['('],expr,[')'],expr_n.
+
 expr --> number,expr_n.
+expr --> ['('],expr,[')'],expr_n.
 expr_n --> [].
 expr_n --> [+],expr,expr_n.
 expr_n --> [*],expr,expr_n.
