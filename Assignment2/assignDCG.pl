@@ -30,7 +30,7 @@ term4 --> identifier.
 term4 --> number.
 
 identifier --> [x] | [y] | [z] | [u] | [v].
-number --> [0] | [1] | [2] | [3] | [4] | [5] | [6] | [7] | [8] | [9] | [0].
+number --> [0] | [1] | [2] | [3] | [4] | [5] | [6] | [7] | [8] | [9].
 
 
 
@@ -44,7 +44,7 @@ declaration(declaration(X)) --> single_declaration(X).
 single_declaration(single_declaration(const,X,=,Y)) --> [const], identifier(X), [=], number(Y).
 single_declaration(single_declaration(var,X)) --> [var], identifier(X).
 
-command(command(X,Y)) --> single_command(X), [;], command(Y).
+command(command(X,;,Y)) --> single_command(X), [;], command(Y).
 command(command(X)) --> single_command(X).
 single_command(single_command(X,:=,Y)) --> identifier(X), [:=], expression(Y).
 single_command(single_command(if,X,then,Y,else,Z,endif)) --> [if], boolean_exp(X), [then], command(Y), [else], command(Z), [endif].
@@ -87,7 +87,6 @@ number(number(6)) --> [6].
 number(number(7)) --> [7].
 number(number(8)) --> [8].
 number(number(9)) --> [9].
-number(number(0)) --> [0].
 
 
 
