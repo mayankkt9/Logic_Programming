@@ -1,5 +1,5 @@
 %% Palindrome DCG
-%% working_directory(CWD,'/Users/mayankkataruka/Desktop/Work/ASU_Study/2nd_Sem/SER_502/Prolog_Workspace/Assignment2').
+%% working_directory(CWD,'/Users/mayankkataruka/Desktop/Work/ASU_STUDY/2ndSem/Ser502/Assignment/Logic_Programming').
 
 
 

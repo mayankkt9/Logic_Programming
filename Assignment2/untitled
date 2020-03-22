@@ -1,0 +1,29 @@
+
+[begin, const, x, =, 8, ;, var, y, ;, var, z, ;, z, :=, 0, ;, if, x, =, y, +, 2, then, z, :=, 5, else, z, :=, 3, endif, ;, while, not, x, =, z, do, z, :=, z, +, 2, endwhile, end, '.'],
+P = program(block(begin, declaration(single_declaration(const, identifier(x), =, number(8)), ;, declaration(single_declaration(var, identifier(y)), ;, declaration(single_declaration(var, identifier(z))))), ;, command(single_command(identifier(z), :=, expression(term1(term2(term3(term4(number(0)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(e))), ;, command(single_command(if, boolean_exp(expression(term1(term2(term3(term4(identifier(x)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(e)), =, expression(term1(term2(term3(term4(identifier(y)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(+, term1(term2(term3(term4(number(2)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(e)))), then, command(single_command(identifier(z), :=, expression(term1(term2(term3(term4(number(5)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(e)))), else, command(single_command(identifier(z), :=, expression(term1(term2(term3(term4(number(3)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(e)))), endif), ;, command(single_command(while, boolean_exp(not, boolean_exp(expression(term1(term2(term3(term4(identifier(x)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(e)), =, expression(term1(term2(term3(term4(identifier(z)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(e)))), do, command(single_command(identifier(z), :=, expression(term1(term2(term3(term4(identifier(z)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(+, term1(term2(term3(term4(number(2)), term3_not(e)), term2_not(e)), term1_not(e)), expression_not(e))))), endwhile)))), end), '.')
+
+
+begin
+const x = 8;
+var y;
+var z;
+z := 0;
+if x = y + 2 then 
+if x * y / z - x = x + y - z then
+z := 5
+else
+z := 4
+endif;
+else z := 3 
+endif;
+while not x = z 
+do
+z := z + 2 
+endwhile
+end.
+
+
+[begin,const, x, =, 8,;,var, y,;,var, z,;,z, :=, 0,;,if, x, =, y, +, 2, then, if, x, *, y, /, z, -, x, =, x, +, y, -, z, then,z, :=, 5,else,z, :=,4,endif,;,else, z, :=, 3,endif,;, while, not, x, =,z, do,z, :=, z, +, 2, endwhile,end,.]
+
+program(L,[begin,const, x, =, 8,;,var, y,;,var, z,;,z, :=, 0,;,if, x, =, y, +, 2, then, if, x, *, y, /, z, -, x, =, x, +, y, -, z, then,z, :=, 5,else,z, :=,4,endif,;,else, z, :=, 3,endif,;, while, not, x, =,z, do,z, :=, z, +, 2, endwhile,end,.],[]).
+
