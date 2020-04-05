@@ -3,10 +3,10 @@
 program(t_program(X,.)) --> block(X),[.].
 block(t_block(X,Y)) --> [begin], declaration(X), [;], command(Y), [end].
 
-declaration(t_declaration(X,Y)) --> single_declaration(X), [;], declaration(Y).
-declaration(t_declaration(X)) --> single_declaration(X).
-single_declaration(t_single_declaration(const,X,=,Y)) --> [const], identifier(X), [=], number(Y).
-single_declaration(t_single_declaration(var,X)) --> [var], identifier(X).
+declaration(t_multiple_declaration(X,Y)) --> single_declaration(X), [;], declaration(Y).
+declaration(t_single_declaration(X)) --> single_declaration(X).
+single_declaration(t_assign_number(const,X,=,Y)) --> [const], identifier(X), [=], num(Y).
+single_declaration(t_declare_variable(var,X)) --> [var], identifier(X).
 
 command(t_command(X,;,Y)) --> single_command(X), [;], command(Y).
 command(t_command(X)) --> single_command(X).
