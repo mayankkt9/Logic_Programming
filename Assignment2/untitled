@@ -25,5 +25,5 @@ end.
 
 [begin,const, x, =, 8,;,var, y,;,var, z,;,z, :=, 0,;,if, x, =, y, +, 2, then, if, x, *, y, /, z, -, x, =, x, +, y, -, z, then,z, :=, 5,else,z, :=,4,endif,;,else, z, :=, 3,endif,;, while, not, x, =,z, do,z, :=, z, +, 2, endwhile,end,.]
 
-program(L,[begin,const, x, =, 8,;,var, y,;,var, z,;,z, :=, 0,;,if, x, =, y, +, 2, then, if, x, *, y, /, z, -, x, =, x, +, y, -, z, then,z, :=, 5,else,z, :=,4,endif,;,else, z, :=, 3,endif,;, while, not, x, =,z, do,z, :=, z, +, 2, endwhile,end,.],[]).
+program(L,[begin,const, x, =, 8,;,var, y,;,var, z,;,z, :=, 0,;,if, x, =, y, +, 2, then, if, x, *, y, /, z, -, x, =, x, +, y, -, z, then,z, :=, 5,else,z, :=,4,endif,else, z, :=, 3,endif,;, while, not, x, =,z, do,z, :=, z, +, 2, endwhile,end,.],[]).
 
