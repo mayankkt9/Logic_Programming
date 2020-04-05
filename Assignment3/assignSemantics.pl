@@ -1,5 +1,8 @@
 
 
+%% Table Function
+:- table expr/3, term/3.
+
 program(t_program(X)) --> block(X),[.].
 block(t_block(X,Y)) --> [begin], declaration(X), [;], command(Y), [end].
 
@@ -8,17 +11,17 @@ declaration(t_single_declaration(X)) --> single_declaration(X).
 single_declaration(t_assign_number(X,Y)) --> [const], identifier(X), [=], num(Y).
 single_declaration(t_declare_variable(X)) --> [var], identifier(X).
 
-command(t_command(X,;,Y)) --> single_command(X), [;], command(Y).
-command(t_command(X)) --> single_command(X).
-single_command(t_single_command(X,:=,Y)) --> identifier(X), [:=], expression(Y).
-single_command(t_single_command(if,X,then,Y,else,Z,endif)) --> [if], boolean_exp(X), [then], command(Y), [else], command(Z), [endif].
-single_command(t_single_command(while,X,do,Y,endwhile)) --> [while], boolean_exp(X), [do], command(Y), [endwhile].
-single_command(t_single_command(X)) --> block(X).
+command(t_multiple_command(X,Y)) --> single_command(X), [;], command(Y).
+command(t_single_command(X)) --> single_command(X).
+single_command(t_assign_expression(X,Y)) --> identifier(X), [:=], expression(Y).
+single_command(t_if_then_else(X,Y,Z)) --> [if], boolean_exp(X), [then], command(Y), [else], command(Z), [endif].
+single_command(t_while_do(X,Y)) --> [while], boolean_exp(X), [do], command(Y), [endwhile].
+single_command(t_program(X)) --> block(X).
 
-boolean_exp(t_boolean_exp(true)) --> [true].
-boolean_exp(t_boolean_exp(false)) --> [false].
-boolean_exp(t_boolean_exp(X,=,Y)) --> expression(X), [=], expression(Y).
-boolean_exp(t_boolean_exp(not,X)) --> [not], boolean_exp(X).
+boolean_exp(t_boolean_value(true)) --> [true].
+boolean_exp(t_boolean_value(false)) --> [false].
+boolean_exp(t_boolean_exp_equal(X,=,Y)) --> expression(X), [=], expression(Y).
+boolean_exp(t_boolean_exp_not(not,X)) --> [not], boolean_exp(X).
 
 
 expr(t_add(X,Y)) --> expr(X), [+], term(Y).
