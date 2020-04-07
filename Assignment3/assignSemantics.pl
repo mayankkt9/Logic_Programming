@@ -87,18 +87,18 @@ eval_command(t_comm_assign_expression(I,E), Env, NewEnv) :-
 
 eval_command(t_comm_while_do(B,C), Env, NewEnv) :-
 	eval_boolean_expression(B, Env, Env1, true),
-	eval_command(C, Env1, Env2),
+	eval_command_list(C, Env1, Env2),
 	eval_command(t_comm_while_do(B,C), Env2, NewEnv).
 eval_command(t_comm_while_do(B,_C), Env, EnvRes) :- 
 	eval_boolean_expression(B, Env, EnvRes, false).
 
 eval_command(t_comm_if_then_else(B,C1,_), Env, NewEnv) :-
 	eval_boolean_expression(B, Env, Env1, true),
-	eval_command(C1, Env1, NewEnv).
+	eval_command_list(C1, Env1, NewEnv).
 
 eval_command(t_comm_if_then_else(B,_,C2), Env, NewEnv) :-
 	eval_boolean_expression(B, Env, Env1, false),
-	eval_command(C2, Env1, NewEnv).
+	eval_command_list(C2, Env1, NewEnv).
 
 eval_identifier_name(t_id(X), _, X).
 
@@ -209,5 +209,20 @@ begin var x; var y; var z; z:=(z:=x+2)+y end.
 ?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,(,z,:=,x,+,2,),+,y, end,.], []),program_eval(P, 2, 3, Z).
 
 Test Case 4
+
+begin var x; var y; var z; if x=y then z:=1 else z:=0 endif end.
+
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, if, x,=,y, then, z,:=,1, else, z,:=,0, endif, end,.], []),program_eval(P, 2, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_single_command(t_comm_if_then_else(t_boolean_exp_equal(t_id(x), t_id(y)), t_single_command(t_comm_assign_expression(t_id(z), t_num(1))), t_single_command(t_comm_assign_expression(t_id(z), t_num(0))))))) ;
+
+
+
+
+
+
+
+
+
+
 
 **/
