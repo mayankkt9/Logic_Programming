@@ -81,9 +81,12 @@ eval_command_list(t_single_command(C), Env, EnvR) :-
 	eval_command(C, Env, EnvR).
 
 eval_command(t_comm_assign_expression(I,E), Env, NewEnv) :-
+	eval_identifier_name(I, Env, Variable),
 	eval_expression(E, Env, Env1, Val),
-	update(I, Val, Env1, NewEnv).
+	update(Variable, Val, Env1, NewEnv).
 
+eval_identifier_name(t_id(X), Env, X) :- 
+	lookup(X, Env, Val).
 
 eval_command(t_comm_while_do(B,C), Env, NewEnv) :-
 	eval_boolean_expression(B, Env, Env1, true),
