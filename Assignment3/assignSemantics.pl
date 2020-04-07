@@ -122,31 +122,31 @@ not_expression(false,true).
 
 
 eval_expression(t_assign_multiple_expression(I,E), Env, EnvRes,Val) :-
-	eval_expression(E, Env, Val),
+	eval_expression(E, Env, Env, Val),
 	update(I, Val, Env, EnvRes).
 
 eval_expression(t_add_expr(X,Y), Env, Env, Val) :- 
-	eval_expression(X, Env, Val1),
-    eval_expression(Y, Env, Val2),
+	eval_expression(X, Env, Env, Val1),
+    eval_expression(Y, Env, Env, Val2),
     Val is Val1 + Val2.
 
 eval_expression(t_sub_expr(X,Y), Env, Env, Val) :- 
-	eval_expression(X, Env, Val1),
-    eval_expression(Y, Env, Val2),
+	eval_expression(X, Env, Env, Val1),
+    eval_expression(Y, Env, Env, Val2),
     Val is Val1 - Val2.
 
 eval_expression(t_mul_expr(X,Y), Env, Env, Val) :- 
-	eval_expression(X, Env, Val1),
-    eval_expression(Y, Env, Val2),
+	eval_expression(X, Env, Env, Val1),
+    eval_expression(Y, Env, Env, Val2),
     Val is Val1 * Val2.
 
 eval_expression(t_div_expr(X,Y), Env, Env, Val) :- 
-	eval_expression(X, Env, Val1),
-    eval_expression(Y, Env, Val2),
+	eval_expression(X, Env, Env, Val1),
+    eval_expression(Y, Env, Env, Val2),
     Val is Val1 / Val2.
 
 eval_expression(t_bracket_expr(X), Env, Env, Val) :- 
-	eval_expression(X, Env, Val).
+	eval_expression(X, Env, Env, Val).
 
 
 eval_expression(t_id(X), Env, Env, Val) :- 
@@ -162,7 +162,7 @@ lookup(Key,[_|Tail],Value) :- lookup(Key, Tail, Value).
 
 %% Update Function
 
-update(Key, Val, [], [(Key|Val)]).
+update(Key, Val, [], [(Key,Val)]).
 update(Key, Val, [(Key,_)|Tail], [(Key, Val)|Tail]).
 update(Key, Val, [Head|Tail], [Head|Result]) :-
 	Head \= (Key,_),
