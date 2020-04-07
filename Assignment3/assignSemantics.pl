@@ -118,30 +118,35 @@ eval_boolean_expression(t_boolean_value_true, _, true).
 eval_boolean_expression(t_boolean_value_false, _, false).
 
 eval_expression(t_assign_multiple_expression(I,E), Env, EnvRes,Val) :-
-	eval_expression(E, Env, Env1, Val),
-	update(I, Val, Env1, EnvRes).
+	eval_expression(E, Env, Val),
+	update(I, Val, Env, EnvRes).
 
 eval_expression(t_add_expr(X,Y), Env, Val) :- 
 	eval_expression(X, Env, Val1),
     eval_expression(Y, Env, Val2),
     Val is Val1 + Val2.
 
-eval_expression(t_sub_expr(X,Y), Env, Val) :- eval_expression(X, Env, Val1),
-    								eval_expression(Y, Env, Val2),
-    								Val is Val1 - Val2.
+eval_expression(t_sub_expr(X,Y), Env, Val) :- 
+	eval_expression(X, Env, Val1),
+    eval_expression(Y, Env, Val2),
+    Val is Val1 - Val2.
 
-eval_expression(t_mul_expr(X,Y), Env, Val) :- eval_expression(X, Env, Val1),
-    								eval_expression(Y, Env, Val2),
-    								Val is Val1 * Val2.
+eval_expression(t_mul_expr(X,Y), Env, Val) :- 
+	eval_expression(X, Env, Val1),
+    eval_expression(Y, Env, Val2),
+    Val is Val1 * Val2.
 
-eval_expression(t_div_expr(X,Y), Env, Val) :- eval_expression(X, Env, Val1),
-    								eval_expression(Y, Env, Val2),
-    								Val is Val1 / Val2.
+eval_expression(t_div_expr(X,Y), Env, Val) :- 
+	eval_expression(X, Env, Val1),
+    eval_expression(Y, Env, Val2),
+    Val is Val1 / Val2.
 
-eval_expression(t_bracket_expr(X), Env, Val) :- eval_expression(X, Env, Val).
+eval_expression(t_bracket_expr(X), Env, Val) :- 
+	eval_expression(X, Env, Val).
 
 
-eval_expression(t_id(X), Env, Val) :- lookup(X, Env, Val).
+eval_expression(t_id(X), Env, Val) :- 
+	lookup(X, Env, Val).
 
 eval_expression(t_num(X),_,X).
 
