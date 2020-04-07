@@ -36,7 +36,7 @@ term(t_mul_expr(X,Y)) --> term(X), [*], term_bracket(Y).
 term(t_div_expr(X,Y)) --> term(X), [/], term_bracket(Y).
 term(X) --> term_bracket(X).
 
-term_bracket(t_bracket_expr(X)) --> ['('], expr(X), [')'].
+term_bracket(t_bracket_expr(X)) --> ['('], expression(X), [')'].
 term_bracket(X) --> identifier(X).
 term_bracket(X) --> num(X).
 
@@ -85,9 +85,6 @@ eval_command(t_comm_assign_expression(I,E), Env, NewEnv) :-
 	eval_expression(E, Env, Env1, Val),
 	update(Variable, Val, Env1, NewEnv).
 
-eval_identifier_name(t_id(X), Env, X) :- 
-	lookup(X, Env, Val).
-
 eval_command(t_comm_while_do(B,C), Env, NewEnv) :-
 	eval_boolean_expression(B, Env, Env1, true),
 	eval_command(C, Env1, Env2),
@@ -103,6 +100,7 @@ eval_command(t_comm_if_then_else(B,_,C2), Env, NewEnv) :-
 	eval_boolean_expression(B, Env, Env1, false),
 	eval_command(C2, Env1, NewEnv).
 
+eval_identifier_name(t_id(X), _, X).
 
 eval_boolean_expression(t_boolean_exp_equal(E1,E2), Env, EnvRes, Val) :-
 	eval_expression(E1, Env, Env1, Val1),
@@ -176,6 +174,40 @@ update(Key, Val, [Head|Tail], [Head|Result]) :-
 %% 	- eval_command_list(CL, Env1, EnvR), ! .
 %%  - skipping single_command(t_comm_program(X)) --> block(X). semantics 
 %%  - eval_boolean_expression(t_boolean_exp_equal(E1,E2), Env, Val) :-
+%%  - test case 3 Failing
 
+/**
+Test Case 1
 
+begin
+	var z;
+	var x;
+	z:=x
+end.
 
+?- program(P, [begin, var, z, ; , var, x, ;, z, :=, x, end, .], []),program_eval(P, 2, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(z)), t_single_declaration(t_declare_variable(t_id(x)))), t_single_command(t_comm_assign_expression(t_id(z), t_id(x))))),
+Z = 2 ;
+
+Test Case 2
+
+begin 
+	var x; 
+	var y; 
+	var z; 
+	z:=x+y 
+end.
+
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,x,+,y, end,.], []),program_eval(P, 2, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_single_command(t_comm_assign_expression(t_id(z), t_add_expr(t_id(x), t_id(y)))))),
+Z = 5 ;
+
+Test Case 3
+
+begin var x; var y; var z; z:=(z:=x+2)+y end.
+
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,(,z,:=,x,+,2,),+,y, end,.], []),program_eval(P, 2, 3, Z).
+
+Test Case 4
+
+**/
