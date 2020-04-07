@@ -126,24 +126,24 @@ eval_expression(t_add_expr(X,Y), Env, Val) :-
     eval_expression(Y, Env, Val2),
     Val is Val1 + Val2.
 
-eval_expr(t_sub_expr(X,Y), Env, Val) :- eval_expr(X, Env, Val1),
-    								eval_expr(Y, Env, Val2),
+eval_expression(t_sub_expr(X,Y), Env, Val) :- eval_expression(X, Env, Val1),
+    								eval_expression(Y, Env, Val2),
     								Val is Val1 - Val2.
 
-eval_expr(t_mul_expr(X,Y), Env, Val) :- eval_expr(X, Env, Val1),
-    								eval_expr(Y, Env, Val2),
+eval_expression(t_mul_expr(X,Y), Env, Val) :- eval_expression(X, Env, Val1),
+    								eval_expression(Y, Env, Val2),
     								Val is Val1 * Val2.
 
-eval_expr(t_div_expr(X,Y), Env, Val) :- eval_expr(X, Env, Val1),
-    								eval_expr(Y, Env, Val2),
+eval_expression(t_div_expr(X,Y), Env, Val) :- eval_expression(X, Env, Val1),
+    								eval_expression(Y, Env, Val2),
     								Val is Val1 / Val2.
 
-eval_expr(t_bracket_expr(X), Env, Val) :- eval_expr(X, Env, Val).
+eval_expression(t_bracket_expr(X), Env, Val) :- eval_expression(X, Env, Val).
 
 
-eval_expr(t_id_expr(X), Env, Val) :- lookup(X, Env, Val).
+eval_expression(t_id(X), Env, Val) :- lookup(X, Env, Val).
 
-eval_expr(t_num_expr(X),_,X).
+eval_expression(t_num(X),_,X).
 
 
 %% Problems
