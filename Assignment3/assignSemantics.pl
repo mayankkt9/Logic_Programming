@@ -71,6 +71,8 @@ eval_declaration_list(t_single_declaration(D), Env, EnvR) :-
 eval_declaration(t_dec_assign_number(X,Y), Env, EnvRes) :-
 	update(X, Y, Env, EnvRes).
 
+eval_declaration(t_declare_variable(_), Env, Env).
+
 %% eval_command_list(Empty, Env, Env)
 eval_command_list(t_multiple_command(C,CL), Env, EnvR) :-
 	eval_command(C, Env, Env1),
@@ -123,34 +125,34 @@ eval_expression(t_assign_multiple_expression(I,E), Env, EnvRes,Val) :-
 	eval_expression(E, Env, Val),
 	update(I, Val, Env, EnvRes).
 
-eval_expression(t_add_expr(X,Y), Env, Val) :- 
+eval_expression(t_add_expr(X,Y), Env, Env, Val) :- 
 	eval_expression(X, Env, Val1),
     eval_expression(Y, Env, Val2),
     Val is Val1 + Val2.
 
-eval_expression(t_sub_expr(X,Y), Env, Val) :- 
+eval_expression(t_sub_expr(X,Y), Env, Env, Val) :- 
 	eval_expression(X, Env, Val1),
     eval_expression(Y, Env, Val2),
     Val is Val1 - Val2.
 
-eval_expression(t_mul_expr(X,Y), Env, Val) :- 
+eval_expression(t_mul_expr(X,Y), Env, Env, Val) :- 
 	eval_expression(X, Env, Val1),
     eval_expression(Y, Env, Val2),
     Val is Val1 * Val2.
 
-eval_expression(t_div_expr(X,Y), Env, Val) :- 
+eval_expression(t_div_expr(X,Y), Env, Env, Val) :- 
 	eval_expression(X, Env, Val1),
     eval_expression(Y, Env, Val2),
     Val is Val1 / Val2.
 
-eval_expression(t_bracket_expr(X), Env, Val) :- 
+eval_expression(t_bracket_expr(X), Env, Env, Val) :- 
 	eval_expression(X, Env, Val).
 
 
-eval_expression(t_id(X), Env, Val) :- 
+eval_expression(t_id(X), Env, Env, Val) :- 
 	lookup(X, Env, Val).
 
-eval_expression(t_num(X),_,X).
+eval_expression(t_num(X), _, _, X).
 
 
 %% Lookup Function 
