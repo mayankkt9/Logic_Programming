@@ -25,7 +25,7 @@ boolean_exp(t_boolean_exp_equal(X,=,Y)) --> expression(X), [=], expression(Y).
 boolean_exp(t_boolean_exp_not(not,X)) --> [not], boolean_exp(X).
 
 
-expression(t_assign_expr(X,Y)) --> identifier(X), [:=], expression(Y).
+expression(t_assign_multiple_expression(X,Y)) --> identifier(X), [:=], expression(Y).
 expression(X) --> expr(X).
 
 expr(t_add(X,Y)) --> expr(X), [+], term(Y).

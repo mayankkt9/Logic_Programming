@@ -1,0 +1,17 @@
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), 
+
+
+
+t_multiple_command(
+	t_assign_expression(t_id(z), t_num(1)), 
+	t_multiple_command(t_assign_expression(t_id(u), t_id(x)), 
+		t_single_command(t_while_do(t_boolean_exp_not(not, t_boolean_exp_equal(t_id(u), =, t_num(0))), 			t_multiple_command(t_assign_expression(t_id(z), t_mul(t_id(z), t_id(y))), 
+				t_single_command(t_assign_expression(t_id(u), t_sub(t_id(u), t_num(1)))
+								)
+							)
+						)
+					)
+				)
+			)
+		)
+	) ;
