@@ -59,8 +59,8 @@ program_eval(t_program(B), XVal, YVal, ZVal) :-
 	lookup(z, Env3, ZVal).
 
 eval_block(t_block(DL,CL), Env, EnvRes) :-
-	eval_declaration_list(Dl, Env, Env1),
-	eval_command_list(Cl, Env1, EnvRes).
+	eval_declaration_list(DL, Env, Env1),
+	eval_command_list(CL, Env1, EnvRes).
 
 eval_declaration_list(t_multiple_declaration(D,DL), Env, EnvR) :-
 	eval_declaration(D, Env, Env1),
@@ -69,7 +69,7 @@ eval_declaration_list(t_single_declaration(D), Env, EnvR) :-
 	eval_declaration(D, Env, EnvR).
 
 eval_declaration(t_dec_assign_number(X,Y), Env, EnvRes) :-
-	update(X, Y, Env, EnvRe).
+	update(X, Y, Env, EnvRes).
 
 %% eval_command_list(Empty, Env, Env)
 eval_command_list(t_multiple_command(C,CL), Env, EnvR) :-
@@ -84,38 +84,40 @@ eval_command(t_comm_assign_expression(I,E), Env, NewEnv) :-
 
 
 eval_command(t_comm_while_do(B,C), Env, NewEnv) :-
-	eval_boolean_expression(B, Env, true),
-	eval_command(C, Env, Env1),
-	eval_command(t_comm_while_do(B,C), Env1, NewEnv).
-eval_command(t_comm_while_do(B,_C), Env, Env) :- 
-	eval_boolean_expression(B, Env, false).
+	eval_boolean_expression(B, Env, Env1, true),
+	eval_command(C, Env1, Env2),
+	eval_command(t_comm_while_do(B,C), Env2, NewEnv).
+eval_command(t_comm_while_do(B,_C), Env, EnvRes) :- 
+	eval_boolean_expression(B, Env, EnvRes, false).
 
-eval_command(t_comm_if_then_else(B,C1,C2), Env, NewEnv) :-
-	eval_boolean_expression(B, Env, true),
-	eval_command(C1, Env, NewEnv).
+eval_command(t_comm_if_then_else(B,C1,_), Env, NewEnv) :-
+	eval_boolean_expression(B, Env, Env1, true),
+	eval_command(C1, Env1, NewEnv).
 
-eval_command(t_comm_if_then_else(B,C1,C2), Env, NewEnv) :-
-	eval_boolean_expression(B, Env, false),
-	eval_command(C2, Env, NewEnv).
+eval_command(t_comm_if_then_else(B,_,C2), Env, NewEnv) :-
+	eval_boolean_expression(B, Env, Env1, false),
+	eval_command(C2, Env1, NewEnv).
 
 
-eval_boolean_expression(t_boolean_exp_equal(E1,E2), Env, Val) :-
+eval_boolean_expression(t_boolean_exp_equal(E1,E2), Env, EnvRes, Val) :-
 	eval_expression(E1, Env, Env1, Val1),
-	eval_expression(E2, Env1, Env2, Val2),
-	equal(Val1,Val2,Val).
+	eval_expression(E2, Env1, EnvRes, Val2),
+	equal_expression(Val1,Val2,Val).
 
-equal(Val1,Val2,true) :- Val1=Val2.
-equal(Val1,Val2,false) :- Val1\=Val2.
-
-eval_boolean_expression(t_boolean_exp_not(B), Env, Val) :-
-	eval_boolean_expression(B,Env,Val1),
-	not(Val1,Val).
-
-not(true,false).
-not(false,true).
+eval_boolean_expression(t_boolean_exp_not(B), Env, EnvRes, Val) :-
+	eval_boolean_expression(B,Env,EnvRes,Val1),
+	not_expression(Val1,Val).
 
 eval_boolean_expression(t_boolean_value_true, _, true).
 eval_boolean_expression(t_boolean_value_false, _, false).
+
+equal_expression(Val1,Val2,true) :- Val1=Val2.
+equal_expression(Val1,Val2,false) :- Val1\=Val2.
+
+not_expression(true,false).
+not_expression(false,true).
+
+
 
 eval_expression(t_assign_multiple_expression(I,E), Env, EnvRes,Val) :-
 	eval_expression(E, Env, Val),
@@ -150,6 +152,19 @@ eval_expression(t_id(X), Env, Val) :-
 
 eval_expression(t_num(X),_,X).
 
+
+%% Lookup Function 
+
+lookup(Key,[(Key,Value)|_],Value).
+lookup(Key,[_|Tail],Value) :- lookup(Key, Tail, Value).
+
+%% Update Function
+
+update(Key, Val, [], [(Key|Val)]).
+update(Key, Val, [(Key,_)|Tail], [(Key, Val)|Tail]).
+update(Key, Val, [Head|Tail], [Head|Result]) :-
+	Head \= (Key,_),
+	update(Key, Val, Tail, Result). 
 
 %% Problems
 %% 	- single_command(t_program(X)) --> block(X).
