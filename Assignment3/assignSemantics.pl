@@ -365,6 +365,29 @@ end.
 P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(u))))), t_multiple_command(t_comm_assign_expression(t_id(u), t_add_expr(t_mul_expr(t_num(2), t_id(x)), t_id(y))), t_single_command(t_comm_program(t_block(t_multiple_declaration(t_declare_variable(t_id(v)), t_single_declaration(t_declare_variable(t_id(z)))), t_multiple_command(t_comm_assign_expression(t_id(v), t_num(100)), t_multiple_command(t_comm_assign_expression(t_id(z), t_add_expr(t_id(u), t_id(v))), t_single_command(t_comm_program(t_block(t_single_declaration(t_declare_variable(t_id(x))), t_single_command(t_comm_assign_expression(t_id(z), t_add_expr(t_id(z), t_num(1000))))))))))))))),
 Z = 1107 ;
 
+Test Case 10 (Nested While)
+
+begin 
+	var x; 
+	var y; 
+	var z; 
+	z:=1; 
+	u:=x;
+	while not u = 0 do 
+		v:=y;
+		while not v = 0 do
+			z := z + 1 ;
+			v := v - 1
+		endwhile;
+		u := u - 1 
+	endwhile 
+end.
+
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,1,;, u,:=,x,;,  while, not, u, =,0, do,v,:=,y,;, while, not, v, =, 0, do, z, :=, z, +, 1, ;,v, :=, v, -, 1, endwhile,;, u, :=, u, -, 1, endwhile, end,.], []),program_eval(P, 2, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_multiple_command(t_comm_assign_expression(t_id(z), t_num(1)), t_multiple_command(t_comm_assign_expression(t_id(u), t_id(x)), t_single_command(t_comm_while_do(t_boolean_exp_not(t_boolean_exp_equal(t_id(u), t_num(0))), t_multiple_command(t_comm_assign_expression(t_id(v), t_id(y)), t_multiple_command(t_comm_while_do(t_boolean_exp_not(t_boolean_exp_equal(t_id(v), t_num(0))), t_multiple_command(t_comm_assign_expression(t_id(z), t_add_expr(t_id(z), t_num(1))), t_single_command(t_comm_assign_expression(t_id(v), t_sub_expr(t_id(v), t_num(1)))))), t_single_command(t_comm_assign_expression(t_id(u), t_sub_expr(t_id(u), t_num(1)))))))))))),
+Z = 7 ;
+
+
 Test Cases Failing List 
 
 
