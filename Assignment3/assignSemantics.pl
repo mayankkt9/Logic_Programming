@@ -153,7 +153,7 @@ eval_expression(t_bracket_expr(X), Env, Env, Val) :-
 eval_expression(t_id(X), Env, Env, Val) :- 
 	lookup(X, Env, Val).
 
-eval_expression(t_num(X), _, _, X).
+eval_expression(t_num(X), Env, Env, X).
 
 
 %% Lookup Function 
@@ -224,6 +224,32 @@ end.
 ?- program(P, [begin, var, x,;, var, y,;, var, z,;, if, x,=,y, then, z,:=,1, else, z,:=,0, endif, end,.], []),program_eval(P, 2, 3, Z). 
 P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_single_command(t_comm_if_then_else(t_boolean_exp_equal(t_id(x), t_id(y)), t_single_command(t_comm_assign_expression(t_id(z), t_num(1))), t_single_command(t_comm_assign_expression(t_id(z), t_num(0))))))),
 Z = 0 ;
+
+
+Test Case 5
+
+begin 
+	var x; 
+	var y; 
+	var z; 
+	if x = 0 then 
+		z:=x 
+	else 
+		z:=y 
+	endif 
+end.
+
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, if, x, =, 0, then, z,:=,x, else, z,:=,y, endif, end,.], []),program_eval(P, 2, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_single_command(t_comm_if_then_else(t_boolean_exp_equal(t_id(x), t_num(0)), t_single_command(t_comm_assign_expression(t_id(z), t_id(x))), t_single_command(t_comm_assign_expression(t_id(z), t_id(y))))))),
+Z = 3 ;
+
+
+
+
+
+
+
+
 
 
 
