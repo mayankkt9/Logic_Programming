@@ -218,7 +218,8 @@ begin
 end.
 
 ?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,'(',z,:=,x,+,2,')',+,y, end,.], []),program_eval(P, 2, 3, Z).
-
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_single_command(t_comm_assign_expression(t_id(z), t_add_expr(t_bracket_expr(t_assign_multiple_expression(t_id(z), t_add_expr(t_id(x), t_num(2)))), t_id(y)))))),
+Z = 7 ;
 
 
 
