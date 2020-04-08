@@ -186,9 +186,7 @@ update(Key, Val, [Head|Tail], [Head|Result]) :-
 %% Problems
 %% 	- single_command(t_program(X)) --> block(X).
 %% 	- eval_command_list(CL, Env1, EnvR), ! .
-%%  - skipping single_command(t_comm_program(X)) --> block(X). semantics 
 %%  - eval_boolean_expression(t_boolean_exp_equal(E1,E2), Env, Val) :-
-%%  - test case 3 Failing
 
 /**
 Test Case 1
@@ -339,10 +337,33 @@ begin
 	end
 end.
 
-
-begin, var, x,;, var, y,;, var, u,;, u,:=,2,*,x,+,y, begin, var, v,;, var, z,;, v,:=,100, z,:=,u,+,v, end,., end,.
-
 ?- program(P, [begin, var, x,;, var, y,;, var, u,;, u,:=,2,*,x,+,y,;, begin, var, v,;, var, z,;, v,:=,100,;, z,:=,u,+,v, end, end,.], []),program_eval(P, 2, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(u))))), t_multiple_command(t_comm_assign_expression(t_id(u), t_add_expr(t_mul_expr(t_num(2), t_id(x)), t_id(y))), t_single_command(t_comm_program(t_block(t_multiple_declaration(t_declare_variable(t_id(v)), t_single_declaration(t_declare_variable(t_id(z)))), t_multiple_command(t_comm_assign_expression(t_id(v), t_num(100)), t_single_command(t_comm_assign_expression(t_id(z), t_add_expr(t_id(u), t_id(v))))))))))),
+Z = 107 .
+
+
+Test Case 9 (Test Multiple Nested Block)
+
+begin
+	var x;
+	var y;
+	var u;
+	u:=2*x+y;
+	begin
+		var v;
+		var z;
+		v:=100;
+		z:=u+v;
+		begin
+			var x;
+			z:=z+1000
+		end
+	end
+end.
+
+?- program(P, [begin, var, x,;, var, y,;, var, u,;, u,:=,2,*,x,+,y,;, begin, var, v,;, var, z,;, v,:=,100,;, z,:=,u,+,v,;,begin,var, x,;,z,:=,z,+,1000,end, end, end,.], []),program_eval(P, 2, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(u))))), t_multiple_command(t_comm_assign_expression(t_id(u), t_add_expr(t_mul_expr(t_num(2), t_id(x)), t_id(y))), t_single_command(t_comm_program(t_block(t_multiple_declaration(t_declare_variable(t_id(v)), t_single_declaration(t_declare_variable(t_id(z)))), t_multiple_command(t_comm_assign_expression(t_id(v), t_num(100)), t_multiple_command(t_comm_assign_expression(t_id(z), t_add_expr(t_id(u), t_id(v))), t_single_command(t_comm_program(t_block(t_single_declaration(t_declare_variable(t_id(x))), t_single_command(t_comm_assign_expression(t_id(z), t_add_expr(t_id(z), t_num(1000))))))))))))))),
+Z = 1107 ;
 
 Test Cases Failing List 
 
