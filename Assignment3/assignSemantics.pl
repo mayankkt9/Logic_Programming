@@ -1,5 +1,6 @@
 
 %% working_directory(CWD,'/Users/mayankkataruka/Desktop/Work/ASU_STUDY/2ndSem/Ser502/Assignment/Logic_Programming/Assignment3/').
+%% [assignSemantics].
 
 %% Table Function
 :- table expr/3, term/3.
@@ -123,8 +124,9 @@ not_expression(false,true).
 
 
 eval_expression(t_assign_multiple_expression(I,E), Env, EnvRes,Val) :-
+	eval_identifier_name(I, Env, Variable),
 	eval_expression(E, Env, Env, Val),
-	update(I, Val, Env, EnvRes).
+	update(Variable, Val, Env, EnvRes).
 
 eval_expression(t_add_expr(X,Y), Env, Env, Val) :- 
 	eval_expression(X, Env, Env, Val1),
@@ -169,6 +171,10 @@ update(Key, Val, [Head|Tail], [Head|Result]) :-
 	Head \= (Key,_),
 	update(Key, Val, Tail, Result). 
 
+
+
+
+
 %% Problems
 %% 	- single_command(t_program(X)) --> block(X).
 %% 	- eval_command_list(CL, Env1, EnvR), ! .
@@ -204,9 +210,14 @@ Z = 5 ;
 
 Test Case 3
 
-begin var x; var y; var z; z:=(z:=x+2)+y end.
+begin 
+	var x; 
+	var y; 
+	var z; 
+	z:=(z:=x+2)+y 
+end.
 
-?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,(,z,:=,x,+,2,),+,y, end,.], []),program_eval(P, 2, 3, Z).
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,'(',z,:=,x,+,2,')',+,y, end,.], []),program_eval(P, 2, 3, Z).
 
 
 
@@ -300,6 +311,9 @@ begin
 end.
 
 ?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,1,;, u,:=,x,;, while, not, u, =, 0, do, z, :=,z,*,y,;, u,:=,u,-,1, endwhile, end,.], []),program_eval(P, 5, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_multiple_command(t_comm_assign_expression(t_id(z), t_num(1)), t_multiple_command(t_comm_assign_expression(t_id(u), t_id(x)), t_single_command(t_comm_while_do(t_boolean_exp_not(t_boolean_exp_equal(t_id(u), t_num(0))), t_multiple_command(t_comm_assign_expression(t_id(z), t_mul_expr(t_id(z), t_id(y))), t_single_command(t_comm_assign_expression(t_id(u), t_sub_expr(t_id(u), t_num(1))))))))))),
+Z = 243 .
+
 
 
 Test Cases Failing
