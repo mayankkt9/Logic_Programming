@@ -101,10 +101,13 @@ eval_command(t_comm_if_then_else(B,_,C2), Env, NewEnv) :-
 	eval_boolean_expression(B, Env, Env1, false),
 	eval_command_list(C2, Env1, NewEnv).
 
+eval_command(t_comm_program(B), Env, EnvRes) :-
+	eval_block(B, Env, EnvRes).
+
 eval_command(t_block(DL,CL), Env, EnvRes) :-
 	eval_declaration_list(DL, Env, Env1),
 	eval_command_list(CL, Env1, EnvRes).
-	
+
 
 eval_identifier_name(t_id(X), _, X).
 
@@ -321,6 +324,25 @@ P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_mult
 Z = 243 .
 
 
+Test Case 9 (Test Multiple Block)
+
+begin
+	var x;
+	var y;
+	var u;
+	u:=2*x+y;
+	begin
+		var v;
+		var z;
+		v:=100;
+		z:=u+v
+	end
+end.
+
+
+begin, var, x,;, var, y,;, var, u,;, u,:=,2,*,x,+,y, begin, var, v,;, var, z,;, v,:=,100, z,:=,u,+,v, end,., end,.
+
+?- program(P, [begin, var, x,;, var, y,;, var, u,;, u,:=,2,*,x,+,y,;, begin, var, v,;, var, z,;, v,:=,100,;, z,:=,u,+,v, end, end,.], []),program_eval(P, 2, 3, Z). 
 
 Test Cases Failing List 
 
