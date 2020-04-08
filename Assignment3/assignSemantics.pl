@@ -285,7 +285,21 @@ P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_sing
 Z = 5 ;
 
 
+Test Case 8
 
+begin 
+	var x; 
+	var y; 
+	var z; 
+	z:=1; 
+	u:=x; 
+	while not u = 0 do 
+		z :=z*y; 
+		u:=u-1 
+	endwhile 
+end.
+
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,1,;, u,:=,x,;, while, not, u, =, 0, do, z, :=,z,*,y,;, u,:=,u,-,1, endwhile, end,.], []),program_eval(P, 5, 3, Z). 
 
 
 Test Cases Failing
