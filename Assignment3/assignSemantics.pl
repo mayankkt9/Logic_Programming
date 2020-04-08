@@ -208,6 +208,10 @@ begin var x; var y; var z; z:=(z:=x+2)+y end.
 
 ?- program(P, [begin, var, x,;, var, y,;, var, z,;, z,:=,(,z,:=,x,+,2,),+,y, end,.], []),program_eval(P, 2, 3, Z).
 
+
+
+
+
 Test Case 4
 
 begin 
@@ -263,12 +267,29 @@ Z = 2 ;
 
 
 
+Test Case 7 
+
+begin 
+	var x; 
+	var z; 
+	z:=0; 
+	while not x=0 do 
+		z := z+1; 
+		x:=x-1 
+	endwhile 
+end.
+
+?- program(P, [begin, var, x,;, var, z,;, z,:=,0,;, while, not, x,=,0, do, z, :=, z,+,1,;, x,:=,x,-,1, endwhile, end,.], []),program_eval(P, 5, 3, Z). 
+program(P, [begin, var, x,;, var, z,;, z,:=,0,;, while, not, x,=,0, do, z, :=, z,+,1,;, x,:=,x,-,1, endwhile, end,.], []),program_eval(P, 5, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_single_declaration(t_declare_variable(t_id(z)))), t_multiple_command(t_comm_assign_expression(t_id(z), t_num(0)), t_single_command(t_comm_while_do(t_boolean_exp_not(t_boolean_exp_equal(t_id(x), t_num(0))), t_multiple_command(t_comm_assign_expression(t_id(z), t_add_expr(t_id(z), t_num(1))), t_single_command(t_comm_assign_expression(t_id(x), t_sub_expr(t_id(x), t_num(1)))))))))),
+Z = 5 ;
 
 
 
 
 
-
+Test Cases Failing
+	- 3
 
 
 
