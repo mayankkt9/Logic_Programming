@@ -101,6 +101,11 @@ eval_command(t_comm_if_then_else(B,_,C2), Env, NewEnv) :-
 	eval_boolean_expression(B, Env, Env1, false),
 	eval_command_list(C2, Env1, NewEnv).
 
+eval_command(t_block(DL,CL), Env, EnvRes) :-
+	eval_declaration_list(DL, Env, Env1),
+	eval_command_list(CL, Env1, EnvRes).
+	
+
 eval_identifier_name(t_id(X), _, X).
 
 eval_boolean_expression(t_boolean_exp_equal(E1,E2), Env, EnvRes, Val) :-
