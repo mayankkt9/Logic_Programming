@@ -244,8 +244,22 @@ P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_mult
 Z = 3 ;
 
 
+Test Case 6
 
+begin 
+	var x; 
+	var y; 
+	var z; 
+	if not x=y then 
+		z:=x 
+	else 
+		z:=y 
+	endif 
+end.
 
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, if, not, x,=,y, then, z,:=,x, else, z,:=,y, endif, end,.], []),program_eval(P, 2, 3, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_single_command(t_comm_if_then_else(t_boolean_exp_not(t_boolean_exp_equal(t_id(x), t_id(y))), t_single_command(t_comm_assign_expression(t_id(z), t_id(x))), t_single_command(t_comm_assign_expression(t_id(z), t_id(y))))))),
+Z = 2 ;
 
 
 
