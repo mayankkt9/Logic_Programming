@@ -388,6 +388,25 @@ P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_mult
 Z = 7 ;
 
 
+Test Case 11 (Expression equality Check)
+
+begin 
+	var x; 
+	var y; 
+	var z; 
+	if x*2=y+3 then 
+		z:=1 
+	else 
+		z:=0 
+	endif 
+end.
+
+?- program(P, [begin, var, x,;, var, y,;, var, z,;, if, x,*,2,=,y,+,3, then, z,:=,1, else, z,:=,0, endif, end,.], []),program_eval(P, 2, 1, Z). 
+P = t_program(t_block(t_multiple_declaration(t_declare_variable(t_id(x)), t_multiple_declaration(t_declare_variable(t_id(y)), t_single_declaration(t_declare_variable(t_id(z))))), t_single_command(t_comm_if_then_else(t_boolean_exp_equal(t_mul_expr(t_id(x), t_num(2)), t_add_expr(t_id(y), t_num(3))), t_single_command(t_comm_assign_expression(t_id(z), t_num(1))), t_single_command(t_comm_assign_expression(t_id(z), t_num(0))))))),
+Z = 1 ;
+
+
+
 Test Cases Failing List 
 
 
