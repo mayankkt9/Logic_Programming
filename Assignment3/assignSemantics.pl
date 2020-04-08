@@ -125,31 +125,31 @@ not_expression(false,true).
 
 eval_expression(t_assign_multiple_expression(I,E), Env, EnvRes,Val) :-
 	eval_identifier_name(I, Env, Variable),
-	eval_expression(E, Env, Env, Val),
-	update(Variable, Val, Env, EnvRes).
+	eval_expression(E, Env, Env1, Val),
+	update(Variable, Val, Env1, EnvRes).
 
-eval_expression(t_add_expr(X,Y), Env, Env, Val) :- 
-	eval_expression(X, Env, Env, Val1),
-    eval_expression(Y, Env, Env, Val2),
+eval_expression(t_add_expr(X,Y), Env, Env2, Val) :- 
+	eval_expression(X, Env, Env1, Val1),
+    eval_expression(Y, Env1, Env2, Val2),
     Val is Val1 + Val2.
 
-eval_expression(t_sub_expr(X,Y), Env, Env, Val) :- 
-	eval_expression(X, Env, Env, Val1),
-    eval_expression(Y, Env, Env, Val2),
+eval_expression(t_sub_expr(X,Y), Env, Env2, Val) :- 
+	eval_expression(X, Env, Env1, Val1),
+    eval_expression(Y, Env1, Env2, Val2),
     Val is Val1 - Val2.
 
-eval_expression(t_mul_expr(X,Y), Env, Env, Val) :- 
-	eval_expression(X, Env, Env, Val1),
-    eval_expression(Y, Env, Env, Val2),
+eval_expression(t_mul_expr(X,Y), Env, Env2, Val) :- 
+	eval_expression(X, Env, Env1, Val1),
+    eval_expression(Y, Env1, Env2, Val2),
     Val is Val1 * Val2.
 
-eval_expression(t_div_expr(X,Y), Env, Env, Val) :- 
-	eval_expression(X, Env, Env, Val1),
-    eval_expression(Y, Env, Env, Val2),
+eval_expression(t_div_expr(X,Y), Env, Env2, Val) :- 
+	eval_expression(X, Env, Env1, Val1),
+    eval_expression(Y, Env1, Env2, Val2),
     Val is Val1 / Val2.
 
-eval_expression(t_bracket_expr(X), Env, Env, Val) :- 
-	eval_expression(X, Env, Env, Val).
+eval_expression(t_bracket_expr(X), Env, EnvRes, Val) :- 
+	eval_expression(X, Env, EnvRes, Val).
 
 
 eval_expression(t_id(X), Env, Env, Val) :- 
