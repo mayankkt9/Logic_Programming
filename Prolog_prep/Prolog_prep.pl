@@ -9,6 +9,7 @@
 %% Program 2 - list_last_but_one
 %% Program 3 - List list_kth_element
 %% Program 4 - reverse_list
+%% Program 5 - is_palindrome
 
 %% ------------------------------
 
@@ -77,4 +78,23 @@ reverse_list([H|T],Acc,Ans) :-
     reverse_list(T,[H|Acc],Ans).
 
 %% reverse_list([1,2,3,11,12,14,11],[],Ans).
+%% ------------------------------
+
+is_palindrome([]).
+is_palindrome(L) :-
+    reverse_list(L,[],RevList),
+    is_same(L,RevList).
+
+is_same([],[]).
+is_same([H1|T1],[H2|T2]) :-
+    H1 = H2,
+    is_same(T1,T2).
+
+
+reverse_list([],Ans,Ans).
+reverse_list([H|T],Acc,Ans) :-
+    reverse_list(T,[H|Acc],Ans).
+
+
+%% is_palindrome([1,2,3,4,3,2,1,2]).
 %% ------------------------------
