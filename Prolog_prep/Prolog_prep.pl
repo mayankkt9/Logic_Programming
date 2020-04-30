@@ -10,6 +10,7 @@
 %% Program 3 - List list_kth_element
 %% Program 4 - reverse_list
 %% Program 5 - is_palindrome
+%% Program 6 - flat_list
 
 %% ------------------------------
 
@@ -97,4 +98,18 @@ reverse_list([H|T],Acc,Ans) :-
 
 
 %% is_palindrome([1,2,3,4,3,2,1,2]).
+%% ------------------------------
+
+flat_list([],[]).
+
+flat_list([H|T],[H|List]) :-
+    not(is_list(H)),
+    flat_list(T,List).
+
+flat_list([H|T],List):-
+    flat_list(H,R1),
+    flat_list(T,R2),
+    append(R1,R2,List).
+
+%% flat_list([1,2,3,4,3,2,1,2,[1,2]],X).
 %% ------------------------------
