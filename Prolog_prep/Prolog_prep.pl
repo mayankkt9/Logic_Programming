@@ -5,6 +5,8 @@
 %% Sample 3 - list_length
 %% Sample 4 - copy_list
 
+%% Program 1 - last list last_list_element
+%% Program 2 - list_last_but_one
 
 
 %% ------------------------------
@@ -50,4 +52,11 @@ last_list_element([X],X).
 last_list_element([_|T],Ans) :-
     last_list_element(T,Ans).
 %% last_list_element([1,2,3,11,12,14],X).
+%% ------------------------------
+
+list_last_but_one([X,Y],X).
+list_last_but_one([_|T],Ans) :-
+    list_last_but_one(T,Ans).
+
+%% list_last_but_one([1,2,3,11,12,14,11],X).
 %% ------------------------------
