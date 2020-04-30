@@ -7,6 +7,7 @@
 
 %% Program 1 - last list last_list_element
 %% Program 2 - list_last_but_one
+%% Program 3 - List list_kth_element
 
 
 %% ------------------------------
@@ -60,3 +61,13 @@ list_last_but_one([_|T],Ans) :-
 
 %% list_last_but_one([1,2,3,11,12,14,11],X).
 %% ------------------------------
+
+
+list_kth_element(X,[X|_],1).
+list_kth_element(X,[_|T],K) :-
+    K1 is K - 1,
+    list_kth_element(X,T,K1).
+
+%% list_kth_element(X,[1,2,3,11,12,14,11],6).
+%% ------------------------------
+
