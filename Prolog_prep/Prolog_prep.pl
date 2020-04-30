@@ -8,7 +8,7 @@
 %% Program 1 - last list last_list_element
 %% Program 2 - list_last_but_one
 %% Program 3 - List list_kth_element
-
+%% Program 4 - reverse_list
 
 %% ------------------------------
 
@@ -71,3 +71,10 @@ list_kth_element(X,[_|T],K) :-
 %% list_kth_element(X,[1,2,3,11,12,14,11],6).
 %% ------------------------------
 
+
+reverse_list([],Ans,Ans).
+reverse_list([H|T],Acc,Ans) :-
+    reverse_list(T,[H|Acc],Ans).
+
+%% reverse_list([1,2,3,11,12,14,11],[],Ans).
+%% ------------------------------
