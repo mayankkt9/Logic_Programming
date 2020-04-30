@@ -11,6 +11,7 @@
 %% Program 4 - reverse_list
 %% Program 5 - is_palindrome
 %% Program 6 - flat_list
+%% Program 7 - eliminate_consecutive
 
 %% ------------------------------
 
@@ -112,4 +113,16 @@ flat_list([H|T],List):-
     append(R1,R2,List).
 
 %% flat_list([1,2,3,4,3,2,1,2,[1,2]],X).
+%% ------------------------------
+
+
+eliminate_consecutive([],[]).
+eliminate_consecutive([A],[A]).
+eliminate_consecutive([H1,H2|T],[H1|List]) :- 
+    H1 \= H2,
+    eliminate_consecutive([H2|T],List).
+eliminate_consecutive([H,H|T],List) :- 
+    eliminate_consecutive([H|T],List).
+
+%% eliminate_consecutive([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 %% ------------------------------
