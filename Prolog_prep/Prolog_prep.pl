@@ -12,6 +12,7 @@
 %% Program 5 - is_palindrome
 %% Program 6 - flat_list
 %% Program 7 - eliminate_consecutive
+%% Program 8 - pack_same_element
 
 %% ------------------------------
 
@@ -125,4 +126,17 @@ eliminate_consecutive([H,H|T],List) :-
     eliminate_consecutive([H|T],List).
 
 %% eliminate_consecutive([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
+%% ------------------------------
+
+
+pack_same_element([],[]).
+pack_same_element([A],[[A]]).
+pack_same_element([H1,H2|T],[[H1]|Tail]) :-
+    H1 \= H2,
+ 	pack_same_element([H2|T],Tail).
+
+pack_same_element([H,H|T],[[H|SubList]|List]) :-
+    pack_same_element([H|T],[SubList|List]).
+
+%% pack_same_element([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 %% ------------------------------
