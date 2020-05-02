@@ -21,6 +21,14 @@
 %% append
 %% permutaion
 %% list_length
+%% reverse non tail recrsion
+%% delete predicate
+%% Prefix | suffix
+%% select 
+%% permutation
+%% perm sort
+%% insertion
+%% quick
 
 %% ------------------------------
 
@@ -87,6 +95,13 @@ list_kth_element(X,[_|T],K) :-
 reverse_list([],Ans,Ans).
 reverse_list([H|T],Acc,Ans) :-
     reverse_list(T,[H|Acc],Ans).
+
+%% Non Tail
+
+reverse([],[]).
+reverse([H|T],Z) :-
+    reverse(T,Z1),
+    append(Z1,[H],Z).
 
 %% reverse_list([1,2,3,11,12,14,11],[],Ans).
 %% ------------------------------
