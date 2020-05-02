@@ -105,7 +105,6 @@ set_constraint([H|T]) :-
 
 
 :- use_module(library(clpfd)).
-
 %% Vertex Database
 vertex(1).
 vertex(2).
@@ -128,7 +127,7 @@ edge(5,3).
 edge(6,3).
 
 %% Undirected Edge statisfies this rule 
-connection(X,Y) :-
+connections(X,Y) :-
     edge(X,Y);edge(Y,X). 
 
 %% Color Database
@@ -149,25 +148,22 @@ color_map(Answerlist) :-
     length(ColorList,VertexCount),
     ColorList ins 1..4,
     generate_answer_list(VertexList,ColorList,Answerlist),
-    forall(edge(X,Y), is_safe(X,Y,Answerlist)).
+    is_safe(Answerlist),
+    label(ColorList).
 
 generate_answer_list([],[],[]).
 generate_answer_list([V|T1],[C|T2],[[V,C]|T3]) :-
     generate_answer_list(T1,T2,T3).
 
-is_safe(X,Y,Answerlist) :-
-    write(Answerlist),nl,
-    colorAt(Answerlist,X,CX),
-    colorAt(Answerlist,Y,CY),
-    write(X),write(" "),write(Y),nl,
-    write(CX),write(" "),write(CY),nl,
-    CX #\= CY.
+is_safe([]).
+is_safe([[V, C]|T]):- check_all(V, C, T), is_safe(T).
 
 
-colorAt([[V,C]|_],V,C).
-colorAt([[V,_]|T],X,CX) :-
-           V \= X,
-           colorAt(T,X,CX).
+% Apply contraint on vertex's color based on edges
+check_all(_,_, []).
+check_all(V1, C1, [[V2, C2]|T]):- connections(V1, V2), C1 #\= C2, check_all(V1, C1, T).
+check_all(V1, C1, [[V2,_]|T]):- \+ connections(V1,V2), check_all(V1, C1, T).
+
 
 
 
