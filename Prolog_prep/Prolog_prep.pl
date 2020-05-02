@@ -13,6 +13,7 @@
 %% Program 6 - flat_list
 %% Program 7 - eliminate_consecutive
 %% Program 8 - pack_same_element
+%% Program 9 - encode
 
 %% ------------------------------
 
@@ -139,4 +140,18 @@ pack_same_element([H,H|T],[[H|SubList]|List]) :-
     pack_same_element([H|T],[SubList|List]).
 
 %% pack_same_element([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
+%% ------------------------------
+
+encode([],[]).
+
+encode(L,X) :-
+    pack_same_element(L,PackedList),
+    compress(PackedList,X).
+
+compress([],[]).
+compress([[H|T]|T1],[[H,N]|T2]) :-
+    length([H|T],N),
+    compress(T1,T2).
+
+%% encode([a,a,a,a,b,c,c,a,a,d,e,e,e,e],X).
 %% ------------------------------
