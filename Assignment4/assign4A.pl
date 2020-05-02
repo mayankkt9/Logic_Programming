@@ -63,8 +63,8 @@ setLines([Row|T]) :-
 :- use_module(library(clpfd)).
 
 solveZebra(Zebra,Water) :-
-    Nations = [English, Spanish, Ukarainian, Norwegian, Japanese],
-    Colors = [Red, Green, Yellow, Bule, White],
+    Nations = [English, Spanish, Ukrainian, Norwegian, Japanese],
+    Colors = [Red, Green, Yellow, Blue, White],
     Pets = [Dog, Serpent, Fox, Horse, Zebra],
     Drinks = [Coffee, Tea, Milk, Juice, Water],
     Ciggarettes = [Winston, Kool, Chesterfield, LuckyStrike, Kent],
