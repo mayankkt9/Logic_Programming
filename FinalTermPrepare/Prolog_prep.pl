@@ -4,6 +4,8 @@
 %% Sample 2 - sorted
 %% Sample 3 - list_length
 %% Sample 4 - copy_list
+%% Sample 5 - append list
+%% Sample 6 - delete list 
 
 %% Program 1 - last list last_list_element
 %% Program 2 - list_last_but_one
@@ -18,10 +20,7 @@
 
 %% TODO
 %% gcd
-%% append
 %% permutaion
-%% list_length
-%% reverse non tail recrsion
 %% delete predicate
 %% Prefix | suffix
 %% select 
@@ -68,6 +67,29 @@ copy_list([H|T],[H|Res]) :-
 
 %% copy_list([1,2,3,4,5],X).
 %% ------------------------------
+
+
+append_list([],L,L).
+append_list([H|T],L1,[H|Ans]) :-
+    append_list(T,L1,Ans).
+
+%% append_list([1,2,3],[a,b],L).
+%% ------------------------------
+
+
+delete_list(_,[],[]).
+delete_list(X,[X|T],T1) :- delete_list(X,T,T1).
+delete_list(X,[H|T],[H|Ans]) :-delete_list(X,T,Ans).
+
+%% delete_list(2,[1,2,3,1,2,1,5],L).
+%% ------------------------------
+
+
+
+%% 99 Prolog program
+
+
+
 
 last_list_element([X],X).
 last_list_element([_|T],Ans) :-
