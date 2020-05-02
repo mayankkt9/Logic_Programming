@@ -1,4 +1,4 @@
-:- use_module(library(clpfd)).
+
 %:- use_rendering(chess).
 
 queens(N,Qs) :- 
@@ -63,7 +63,7 @@ setLines([Row|T]) :-
 :- use_module(library(clpfd)).
 
 solveZebra(Zebra,Water) :-
-    Nations = [Englist, Spanish, Ukarainian, Norwegian, Japanese],
+    Nations = [English, Spanish, Ukarainian, Norwegian, Japanese],
     Colors = [Red, Green, Yellow, Bule, White],
     Pets = [Dog, Serpent, Fox, Horse, Zebra],
     Drinks = [Coffee, Tea, Milk, Juice, Water],
@@ -96,5 +96,78 @@ set_constraint([H|T]) :-
     H ins 1..5,
     all_distinct(H),
     set_constraint(T).
+    
+    
+
+
+
+
+
+
+
+
+:- use_module(library(clpfd)).
+
+%% Vertex Database
+vertex(1).
+vertex(2).
+vertex(3).
+vertex(4).
+vertex(5).
+vertex(6).
+
+%% Edge Database
+edge(1,2).
+edge(1,3).
+edge(1,6).
+edge(1,4).
+edge(2,5).
+edge(2,3).
+edge(3,4).
+edge(6,4).
+edge(5,4).
+edge(5,3).
+edge(6,3).
+
+%% Undirected Edge statisfies this rule 
+connection(X,Y) :-
+    edge(X,Y);edge(Y,X). 
+
+%% Color Database
+color(1,red).
+color(2,blue).
+color(3,green).
+color(4,yellow).
+
+generate_vertex_list(L) :-
+    findall(X, vertex(X), L), 
+    maplist(vertex, L).
+
+
+
+color_map(Answerlist) :-
+    generate_vertex_list(VertexList),
+    length(VertexList,VertexCount),
+    length(ColorList,VertexCount),
+    ColorList ins 1..4,
+    generate_answer_list(VertexList,ColorList,Answerlist),
+    is_safe(Answerlist).
+
+generate_answer_list([],[],[]).
+generate_answer_list([V|T1],[C|T2],[[V,C]|T3]) :-
+    generate_answer_list(T1,T2,T3).
+
+is_safe(Answerlist) :-
+    edge(X,Y),
+    colorAt(Answerlist,X,CX),
+    colorAt(Answerlist,Y,CY),
+    CX #\= CY.
+
+
+colorAt([[V,C]|_],V,C).
+colorAt([[V,_]|T],X,CX) :-
+           V \= X,
+           colorAt(T,X,CX).
+    
     
     
