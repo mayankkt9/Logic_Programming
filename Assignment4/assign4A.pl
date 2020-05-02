@@ -108,19 +108,21 @@ generate_vertex_list(L) :-
     maplist(vertex, L).
 
 %% This is the main map coloring predicate that calls helper predicate
-color_map(Answerlist) :-
+color_map(AnswertoColorlist) :-
     generate_vertex_list(VertexList),
     length(VertexList,VertexCount),
     length(ColorList,VertexCount),
     ColorList ins 1..4,
     generate_answer_list(VertexList,ColorList,Answerlist),
     is_safe(Answerlist),
-    label(ColorList).
+    label(ColorList),
+    colorAt(Answerlist,AnswertoColorlist).
 
 %% This combines vertex and color list this way [[V1,C1],[V2,C2],[V3,C3],[V4,C4],[V5,C5],[V6,C6]]
 generate_answer_list([],[],[]).
 generate_answer_list([V|T1],[C|T2],[[V,C]|T3]) :-
     generate_answer_list(T1,T2,T3).
+
 
 %% This checks if it is safe to color vertex
 is_safe([]).
@@ -132,7 +134,11 @@ check_all(_,_, []).
 check_all(V1, C1, [[V2, C2]|T]):- connections(V1, V2), C1 #\= C2, check_all(V1, C1, T).
 check_all(V1, C1, [[V2,_]|T]):- \+ connections(V1,V2), check_all(V1, C1, T).
 
-
+%% Map Color number to Color name
+colorAt([],[]).
+colorAt([[V,C]|T],[[V,N]|T2]) :-
+    color(C,N),
+    colorAt(T,T2).
 
 
 %% Question 4 solve zebra
@@ -161,7 +167,7 @@ solveZebra(Zebra,Water) :-
     LuckyStrike #= Juice,
     Japanese #= Kent,
     next(Norwegian,Blue),
-    Flatten(X,Ans),
+    flatten(X,Ans),
     label(Ans).
 
 %% This add constraints if two value are neighbour
