@@ -104,8 +104,6 @@ set_constraint([H|T]) :-
 
 
 
-
-
 :- use_module(library(clpfd)).
 
 %% Vertex Database
@@ -151,16 +149,18 @@ color_map(Answerlist) :-
     length(ColorList,VertexCount),
     ColorList ins 1..4,
     generate_answer_list(VertexList,ColorList,Answerlist),
-    is_safe(Answerlist).
+    forall(edge(X,Y), is_safe(X,Y,Answerlist)).
 
 generate_answer_list([],[],[]).
 generate_answer_list([V|T1],[C|T2],[[V,C]|T3]) :-
     generate_answer_list(T1,T2,T3).
 
-is_safe(Answerlist) :-
-    edge(X,Y),
+is_safe(X,Y,Answerlist) :-
+    write(Answerlist),nl,
     colorAt(Answerlist,X,CX),
     colorAt(Answerlist,Y,CY),
+    write(X),write(" "),write(Y),nl,
+    write(CX),write(" "),write(CY),nl,
     CX #\= CY.
 
 
@@ -168,6 +168,9 @@ colorAt([[V,C]|_],V,C).
 colorAt([[V,_]|T],X,CX) :-
            V \= X,
            colorAt(T,X,CX).
-    
+
+
+
+
     
     
