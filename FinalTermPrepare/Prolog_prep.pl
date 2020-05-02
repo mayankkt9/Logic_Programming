@@ -14,7 +14,13 @@
 %% Program 7 - eliminate_consecutive
 %% Program 8 - pack_same_element
 %% Program 9 - encode
-%% Program 10 
+%% Program 10 - encode
+
+%% TODO
+%% gcd
+%% append
+%% permutaion
+%% list_length
 
 %% ------------------------------
 
