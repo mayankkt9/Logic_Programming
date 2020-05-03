@@ -24,6 +24,8 @@
 %% Program 15 - N duplicate 
 %% Program 17 - split
 %% Program 18 - slice (Nice Question)
+%% Program 19 - rotate
+%% Program 20 - remove_at
 
 %% TODO
 %% gcd
@@ -291,6 +293,40 @@ slice_me([_|T],C,S,E,A) :-
     S1 is S - 1,
     E1 is E - 1,
     slice_me(T,C,S1,E1,A).
-    
+
 %% slice([a,b,c,d,e,f,g,h,i,k],3,7,L).
+%% ------------------------------
+
+
+split(L,0,[],L).
+split([H|T],N,[H|T1],L2) :-
+    N>0,
+    N1 is N - 1,
+    split(T,N1,T1,L2).
+
+
+rotate(L,0,L).
+rotate(L,N,X) :-
+    N>0,
+    rotate_me(L,N,X).
+rotate(L,N,X) :-
+    N=<0,
+    length(L,N1),
+    N2 is N1 + N,
+    rotate_me(L,N2,X).
+
+rotate_me(L,N,X) :-
+    split(L,N,L1,L2),
+    append(L2,L1,X).
+
+%% rotate([a,b,c,d,e,f,g,h],-3,X).
+%% ------------------------------
+
+remove_at(H,[H|T],1,T).
+remove_at(X,[H|T],N,[H|Ans]) :-
+    N1 is N-1,
+    N>0,
+    remove_at(X,T,N1,Ans).
+
+%% remove_at(X,[a,b,c,d],2,R).
 %% ------------------------------
