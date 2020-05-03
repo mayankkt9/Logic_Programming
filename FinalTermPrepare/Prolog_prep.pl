@@ -23,6 +23,7 @@
 %% Program 14 - duplicate  
 %% Program 15 - N duplicate 
 %% Program 17 - split
+%% Program 18 - slice (Nice Question)
 
 %% TODO
 %% gcd
@@ -275,4 +276,21 @@ split([a,b,c,d,e,f,g,h,i,k],5,L1,L2).
 
 
 %% split([a,b,c,d,e,f,g,h,i,k],5,L1,L2).
+%% ------------------------------
+slice(L,S,E,A) :-
+    slice_me(L,0,S,E,A).
+
+slice_me([H|_],_,1,1,[H]).
+slice_me([H|T],C,1,E,[H|A]) :-
+    E>1,
+    E1 is E - 1,
+    slice_me(T,C,1,E1,A).
+
+slice_me([_|T],C,S,E,A) :-
+    S>1,
+    S1 is S - 1,
+    E1 is E - 1,
+    slice_me(T,C,S1,E1,A).
+    
+%% slice([a,b,c,d,e,f,g,h,i,k],3,7,L).
 %% ------------------------------
