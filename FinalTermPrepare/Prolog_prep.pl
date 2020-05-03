@@ -21,6 +21,8 @@
 %% Program 9 - encode
 %% Program 10 - encode
 %% Program 14 - duplicate  
+%% Program 15 - N duplicate 
+%% Program 17 - split
 
 %% TODO
 %% gcd
@@ -242,4 +244,35 @@ dupli([H|T],[H,H|T1]) :-
     dupli(T,T1).
 
 %% dupli([a,b,c,c,d],X).
+%% ------------------------------
+
+
+
+dupli([],_,[]).
+dupli([H|T],X,Ans) :-
+    get(H,X,L),
+    dupli(T,X,Ans1),
+    append(L,Ans1,Ans).
+    
+
+get(_,0,[]).
+get(X,N,[X|T]) :-
+    N > 0,
+    N1 is N - 1,
+    get(X,N1,T).
+
+%% dupli([a,b,c],3,X).
+%% ------------------------------
+
+
+split(L,0,[],L).
+split([H|T],N,[H|T1],L2) :-
+    N>0,
+    N1 is N - 1,
+    split(T,N1,T1,L2).
+
+split([a,b,c,d,e,f,g,h,i,k],5,L1,L2).
+
+
+%% split([a,b,c,d,e,f,g,h,i,k],5,L1,L2).
 %% ------------------------------
