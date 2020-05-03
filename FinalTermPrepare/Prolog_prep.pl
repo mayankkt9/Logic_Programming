@@ -20,6 +20,7 @@
 %% Program 8 - pack_same_element
 %% Program 9 - encode
 %% Program 10 - encode
+%% Program 14 - duplicate  
 
 %% TODO
 %% gcd
@@ -70,6 +71,7 @@ copy_list([H|T],[H|Res]) :-
 append_list([],L,L).
 append_list([H|T],L1,[H|Ans]) :-
     append_list(T,L1,Ans).
+
 
 %% append_list([1,2,3],[a,b],L).
 %% ------------------------------
@@ -233,4 +235,11 @@ compress([[H|T]|T1],Ans) :-
     ( N < 2 ->  Ans=[[H]|T2]; Ans=[[H,N]|T2]),
     compress(T1,T2).
 
+%% ------------------------------
+
+dupli([],[]).
+dupli([H|T],[H,H|T1]) :-
+    dupli(T,T1).
+
+%% dupli([a,b,c,c,d],X).
 %% ------------------------------
