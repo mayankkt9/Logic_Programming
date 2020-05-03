@@ -6,6 +6,9 @@
 %% Sample 4 - copy_list
 %% Sample 5 - append list
 %% Sample 6 - delete list 
+%% Sample 7 - select list 
+%% Sample 8 - permutaion
+%% Sample 9 - permutaion sort
 
 %% Program 1 - last list last_list_element
 %% Program 2 - list_last_but_one
@@ -20,12 +23,7 @@
 
 %% TODO
 %% gcd
-%% permutaion
-%% delete predicate
 %% Prefix | suffix
-%% select 
-%% permutation
-%% perm sort
 %% insertion
 %% quick
 
@@ -84,6 +82,19 @@ delete_list(X,[H|T],[H|Ans]) :-delete_list(X,T,Ans).
 %% delete_list(2,[1,2,3,1,2,1,5],L).
 %% ------------------------------
 
+
+permutation([],[]).
+permutation(L,[H|T]) :-
+    select(H,L,R),
+    permutation(R,T).
+
+%% permutation([1,2,3],L).
+%% ------------------------------
+
+permutation_sort(X,Y) :-
+    permutation(X,Y),
+    sorted(Y).
+%% ------------------------------
 
 
 %% 99 Prolog program
