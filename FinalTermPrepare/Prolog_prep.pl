@@ -33,7 +33,7 @@
 %% Program 22 - range numbers
 %% Program 23 - rnd_select
 %% Program 24 - rnd_select_2
-
+%% Program 25 - rnd_permu
 %% TODO
 %% Prefix | suffix
 %% insertion
@@ -431,4 +431,27 @@ rnd_select(L,N,[A|Ans]) :-
     rnd_select(L1,N1,Ans).
 
 %% rnd_select2(6,49,L).
+%% ------------------------------
+
+remove_at(H,[H|T],1,T).
+remove_at(X,[H|T],N,[H|Ans]) :-
+    N1 is N-1,
+    N>0,
+    remove_at(X,T,N1,Ans).
+
+rnd_select(_,0,[]).
+rnd_select(L,N,[A|Ans]) :-
+    length(L,Len),
+    Len>0,
+    R1 is random(Len)+1,
+    remove_at(A,L,R1,L1),
+    N1 is N-1,
+    rnd_select(L1,N1,Ans).
+
+
+rnd_permu(L,A) :-
+    length(L,N),
+    rnd_select(L,N,A).
+
+%% rnd_permu([a,b,c,d,e,f],L).
 %% ------------------------------
