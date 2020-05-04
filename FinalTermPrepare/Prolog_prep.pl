@@ -9,6 +9,8 @@
 %% Sample 7 - select list 
 %% Sample 8 - permutaion
 %% Sample 9 - permutaion sort
+%% Sample 10 - lookup
+%% Sample 11 - update
 
 %% Program 1 - last list last_list_element
 %% Program 2 - list_last_but_one
@@ -34,8 +36,7 @@
 %% Prefix | suffix
 %% insertion
 %% quick
-%% lookup
-%% update
+
 
 %% ------------------------------
 
@@ -106,6 +107,30 @@ permutation_sort(X,Y) :-
     permutation(X,Y),
     sorted(Y).
 %% ------------------------------
+
+
+lookup(Key,[(Key,Value)|_],Value).
+lookup(Key,[(K1,_)|T],V):-
+    Key \= K1,
+    lookup(Key,T,V).
+
+%% lookup(5,[(1,10),(2,20),(3,30),(4,40)],X).
+%% ------------------------------
+
+
+update(Key,Value,[],[(Key,Value)]).
+update(Key,Value,[(Key,_)|T],[(Key,Value)|T]).
+update(Key,Value,[(K1,V1)|T],[(K1,V1)|T2]) :-
+    Key \= K1,
+    update(Key,Value,T,T2).
+
+%% update(3,35,[(1,10),(2,20),(3,30),(4,40)],X).
+%% ------------------------------
+
+
+%% ------------------------------------------------------------------------------------------------------------------------------------------------------
+%% ------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 %% 99 Prolog program
@@ -368,12 +393,4 @@ rnd_select(L,N,[A|Ans]) :-
     rnd_select(L1,N1,Ans).
 
 %% rnd_select([a,b,c,d,e,f,g,h],3,L).
-%% ------------------------------
-
-lookup(Key,[(Key,Value)|_],Value).
-lookup(Key,[(K1,_)|T],V):-
-    Key \= K1,
-    lookup(Key,T,V).
-
-%% lookup(5,[(1,10),(2,20),(3,30),(4,40)],X).
 %% ------------------------------
