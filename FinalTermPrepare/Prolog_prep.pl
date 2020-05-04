@@ -11,6 +11,7 @@
 %% Sample 9 - permutaion sort
 %% Sample 10 - lookup
 %% Sample 11 - update
+%% Sample 12 - gcd
 
 %% Program 1 - last list last_list_element
 %% Program 2 - list_last_but_one
@@ -125,6 +126,13 @@ update(Key,Value,[(K1,V1)|T],[(K1,V1)|T2]) :-
     update(Key,Value,T,T2).
 
 %% update(3,35,[(1,10),(2,20),(3,30),(4,40)],X).
+%% ------------------------------
+
+gcd(A,0,A).
+gcd(A,B,C) :-
+    K is A mod B,
+    gcd(B,K,C).
+%% gcd(30,45,K).
 %% ------------------------------
 
 
