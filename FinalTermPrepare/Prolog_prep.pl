@@ -369,3 +369,11 @@ rnd_select(L,N,[A|Ans]) :-
 
 %% rnd_select([a,b,c,d,e,f,g,h],3,L).
 %% ------------------------------
+
+lookup(Key,[(Key,Value)|_],Value).
+lookup(Key,[(K1,_)|T],V):-
+    Key \= K1,
+    lookup(Key,T,V).
+
+%% lookup(5,[(1,10),(2,20),(3,30),(4,40)],X).
+%% ------------------------------
