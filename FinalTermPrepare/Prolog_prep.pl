@@ -32,6 +32,7 @@
 %% Program 21 - insert_at
 %% Program 22 - range numbers
 %% Program 23 - rnd_select
+%% Program 24 - rnd_select_2
 
 %% TODO
 %% Prefix | suffix
@@ -401,4 +402,33 @@ rnd_select(L,N,[A|Ans]) :-
     rnd_select(L1,N1,Ans).
 
 %% rnd_select([a,b,c,d,e,f,g,h],3,L).
+%% ------------------------------
+
+range(E,E,[E]).
+range(S,E,[S|T]) :-
+    S1 is S + 1,
+    range(S1,E,T).
+
+remove_at(H,[H|T],1,T).
+remove_at(X,[H|T],N,[H|Ans]) :-
+    N1 is N-1,
+    N>0,
+    remove_at(X,T,N1,Ans).
+
+
+rnd_select2(0,_,[]).
+rnd_select2(Total,N,Ans) :-
+    range(1,N,L),
+    rnd_select(L,Total,Ans).
+
+
+rnd_select(_,0,[]).
+rnd_select(L,N,[A|Ans]) :-
+    length(L,Len),
+    R1 is random(Len)+1,
+    remove_at(A,L,R1,L1),
+    N1 is N-1,
+    rnd_select(L1,N1,Ans).
+
+%% rnd_select2(6,49,L).
 %% ------------------------------
