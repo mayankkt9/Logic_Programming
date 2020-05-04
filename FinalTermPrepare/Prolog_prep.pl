@@ -34,6 +34,8 @@
 %% Prefix | suffix
 %% insertion
 %% quick
+%% lookup
+%% update
 
 %% ------------------------------
 
