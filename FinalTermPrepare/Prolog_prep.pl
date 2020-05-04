@@ -27,6 +27,7 @@
 %% Program 19 - rotate
 %% Program 20 - remove_at
 %% Program 21 - insert_at
+%% Program 22 - range numbers
 
 %% TODO
 %% gcd
@@ -339,4 +340,30 @@ insert_at(X,[H|T],N,[H|Ans]) :-
     insert_at(X,T,N1,Ans).
 
 %% insert_at(alfa,[a,b,c,d],2,L).
+%% ------------------------------
+
+range(E,E,[E]).
+range(S,E,[S|T]) :-
+    S1 is S + 1,
+    range(S1,E,T).
+
+%% range(4,9,L).
+%% ------------------------------
+
+remove_at(H,[H|T],1,T).
+remove_at(X,[H|T],N,[H|Ans]) :-
+    N1 is N-1,
+    N>0,
+    remove_at(X,T,N1,Ans).
+
+
+rnd_select(_,0,[]).
+rnd_select(L,N,[A|Ans]) :-
+    length(L,Len),
+    R1 is random(Len)+1,
+    remove_at(A,L,R1,L1),
+    N1 is N-1,
+    rnd_select(L1,N1,Ans).
+
+%% rnd_select([a,b,c,d,e,f,g,h],3,L).
 %% ------------------------------
