@@ -31,9 +31,9 @@
 %% Program 20 - remove_at
 %% Program 21 - insert_at
 %% Program 22 - range numbers
+%% Program 23 - rnd_select
 
 %% TODO
-%% gcd
 %% Prefix | suffix
 %% insertion
 %% quick
