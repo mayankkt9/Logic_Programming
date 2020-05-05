@@ -35,6 +35,7 @@
 %% Program 24 - rnd_select_2
 %% Program 25 - rnd_permu
 %% Program 26 - Combination
+%% Program - permutationN
 
 %% TODO
 %% Prefix | suffix
