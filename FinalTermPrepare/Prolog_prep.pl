@@ -34,6 +34,7 @@
 %% Program 23 - rnd_select
 %% Program 24 - rnd_select_2
 %% Program 25 - rnd_permu
+%% Program 26 - Combination
 
 %% TODO
 %% Prefix | suffix
@@ -455,4 +456,28 @@ rnd_permu(L,A) :-
     rnd_select(L,N,A).
 
 %% rnd_permu([a,b,c,d,e,f],L).
+%% ------------------------------
+
+
+combination(0,_,[]).
+
+combination(N,List,[H|T]) :-
+    N>0,
+    select_after(H,List,Res),
+    N1 is N - 1,
+    combination(N1,Res,T).
+
+select_after(H,[H|T],T).
+select_after(X,[_|T],Result) :-
+    select_after(X,T,Result).
+
+%% combination(5,[a,b,c,d,e,f],L).
+%% ------------------------------
+
+permutaionN(0,_,[]).
+permutaionN(N,L,[H|T]) :-
+    N>0,
+    select(H,L,R),
+    N1 is N-1,
+    permutaionN(N1,R,T).
 %% ------------------------------
