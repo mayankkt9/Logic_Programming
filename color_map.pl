@@ -6,6 +6,7 @@ vertex(5).
 vertex(6).
 
 
+
 edge(1,2).
 edge(1,3).
 edge(1,6).
